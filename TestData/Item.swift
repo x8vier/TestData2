@@ -10,9 +10,20 @@ import SwiftData
 
 @Model
 final class Item {
-    var timestamp: Date
-    
-    init(timestamp: Date) {
-        self.timestamp = timestamp
+  var timestamp: Date
+  var quantity: Int
+  var year: Int
+  var viewed: Bool = false
+  
+  init(timestamp: Date, quantity: Int) {
+    self.timestamp = timestamp
+    self.quantity = quantity
+    self.year = Int(timestamp.formatted(Date.FormatStyle().year(.defaultDigits))) ?? 2025
+  }
+  
+  static func examples() -> [Item] {
+    return Array(1...5).map { i in
+      Item(timestamp: Date(), quantity: i)
     }
+  }
 }
