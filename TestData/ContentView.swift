@@ -7,12 +7,17 @@
 
 import SwiftUI
 import SwiftData
+import Observation
+
+@Observable class QuantitySummary {
+  var sumOfQuantityByYear: Int = 0
+}
 
 struct ContentView: View {
   @Environment(\.modelContext) private var modelContext
   @AppStorage("year") var year: Int = 2025
   @Query(sort: [SortDescriptor(\Item.timestamp, order: .reverse)]) private var items: [Item]
-  @State private var sumOfQuantity: Int = 0
+  @State private var quantitySummary = QuantitySummary()
   
   var body: some View {
     NavigationSplitView {
@@ -47,7 +52,10 @@ struct ContentView: View {
               Text("\(year, format: .number.grouping(.never))")
             }
             Spacer()
-            Text("Annual Quantity: \(sumOfQuantity, format: .number)")
+            Text("Annual Quantity: \(quantitySummary.sumOfQuantityByYear, format: .number)")
+              .task {
+                calculateYearQuantity(false)
+              }
           }
         }
       }
@@ -64,7 +72,6 @@ struct ContentView: View {
           modelContext.insert(Item.examples()[3])
           modelContext.insert(Item.examples()[4])
         }
-        calculateYearQuantity(false)
       }
     } detail: {
       Text("Select an item")
@@ -108,13 +115,14 @@ struct ContentView: View {
       incrementYear()
       print("Year after increment:\(year)")
     }
-    sumOfQuantity = 0
+    var tempSum: Int = 0
     for item in items {
       if item.year == year {
-        sumOfQuantity += item.quantity
-        print(sumOfQuantity)
+        tempSum += item.quantity
+        print("\(year) year w/ \(tempSum) quantity")
       }
     }
+    quantitySummary.sumOfQuantityByYear = tempSum
   }
 }
 
