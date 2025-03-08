@@ -13,14 +13,13 @@ struct CellView: View {
   
     var body: some View {
       HStack {
-        //Text(item.year)
         Text(item.timestamp, format: Date.FormatStyle(date: .numeric))
         Spacer()
         Text("\(item.year, format: .number.grouping(.never))")
         Spacer()
         Text("\(item.quantity)")
       }
-      .foregroundStyle(item.viewed ? .primary : Color.red)
+      //.foregroundStyle(item.viewed ? .primary : Color.red)
     }
 }
 
