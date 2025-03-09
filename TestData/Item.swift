@@ -14,6 +14,7 @@ final class Item {
   var quantity: Int
   var year: Int
   var viewed: Bool = false
+  ///Adding this member var to Item model gives me the ability to test the "items" array (SwiftData Query) after a planned deletion
   var toBeDeleted: Bool = false
   
   init(timestamp: Date, quantity: Int) {

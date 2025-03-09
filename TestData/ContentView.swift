@@ -91,10 +91,12 @@ struct ContentView: View {
   private func deleteItems(offsets: IndexSet) {
     withAnimation {
       for index in offsets {
+        ///Adding this statement sets the member var so I can exclude this deleted item if SwiftData has not deleted it from the Query array
         items[index].toBeDeleted = true
         modelContext.delete(items[index])
       }
     }
+    ///I now need to call this function to execute the test
     calculateYearQuantity(false)
   }
   
@@ -118,6 +120,7 @@ struct ContentView: View {
     }
     var tempSum: Int = 0
     for item in items {
+      ///Added test "&& (item.toBeDeleted == false)" to exclude record if SwiftData has not yet updated the Query for the items array
       if ((item.year == year) && (item.toBeDeleted == false)) {
         tempSum += item.quantity
         print("\(year) year w/ \(tempSum) quantity")
