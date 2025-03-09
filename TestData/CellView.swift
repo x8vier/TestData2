@@ -19,7 +19,7 @@ struct CellView: View {
         Spacer()
         Text("\(item.quantity)")
       }
-      //.foregroundStyle(item.viewed ? .primary : Color.red)
+      .foregroundStyle(item.viewed ? .primary : Color.red)
     }
 }
 

@@ -14,6 +14,7 @@ final class Item {
   var quantity: Int
   var year: Int
   var viewed: Bool = false
+  var toBeDeleted: Bool = false
   
   init(timestamp: Date, quantity: Int) {
     self.timestamp = timestamp

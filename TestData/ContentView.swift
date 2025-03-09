@@ -91,10 +91,11 @@ struct ContentView: View {
   private func deleteItems(offsets: IndexSet) {
     withAnimation {
       for index in offsets {
+        items[index].toBeDeleted = true
         modelContext.delete(items[index])
       }
     }
-    //calculateYearQuantity(false)
+    calculateYearQuantity(false)
   }
   
   private func incrementYear() {
@@ -117,7 +118,7 @@ struct ContentView: View {
     }
     var tempSum: Int = 0
     for item in items {
-      if item.year == year {
+      if ((item.year == year) && (item.toBeDeleted == false)) {
         tempSum += item.quantity
         print("\(year) year w/ \(tempSum) quantity")
       }
